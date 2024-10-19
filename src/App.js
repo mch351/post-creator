@@ -11,13 +11,15 @@ function App() {
     const [error, setError] = useState(false);
 
     const addPosts = useCallback(() => {
-            if (inputValue.trim() === "") return;
-            setPosts([...posts, inputValue]);
+        // NOTE Prevent submitting an empty post
+        if (inputValue.trim() === "") return;
+            // setPosts([...posts, inputValue]);
             setPosts([...posts, {content: inputValue}]);
             setInputValue("");
         }, [inputValue, posts]
     )
 
+    // NOTE Simulation of fetching data from server
     useEffect(() => {
         const timer = setTimeout(() => {
             try {
@@ -31,12 +33,12 @@ function App() {
         return () => {
             clearTimeout(timer)
         }
-        console.log("useEffect is Here!!!")
     }, [])
 
     return (
         <div className="App">
             {
+                // NOTE Show content only when loading is complete and data fetched successfully
                 loading ? <div><Spinner/></div> :
                     error ? <div className="error-text"><h1>an error occurred, please try again</h1></div> :
                         <div className="main-container">
@@ -52,6 +54,7 @@ function App() {
                                 />
                             </div>
 
+                            {/* Loop to display data */}
                             <div className="posts-container">
                                 {posts.length === 0 ? <h2>there are no posts</h2> :
                                     posts.map((post, index) => (
@@ -64,6 +67,7 @@ function App() {
     );
 }
 
+// NOTE Using useMemo to prevent unnecessary re-renders
 const Post = React.memo(({content}) => {
     return (
         <div>
