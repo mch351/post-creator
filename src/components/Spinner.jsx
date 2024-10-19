@@ -1,4 +1,3 @@
-import SpinnerGif from "../assets/Spinner_GIF.gif";
 import "./Spinner.css"
 
 const Spinner =()=>{
